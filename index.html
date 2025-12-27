@@ -174,7 +174,7 @@
             padding: 8px 15px;
             border-radius: 10px;
             border: 1px solid var(--glass-border);
-            min-width: 110px;
+            min-width: 130px;
             text-align: center;
         }
 
@@ -182,7 +182,7 @@
         .signal-item.roxo { border-color: var(--purple); }
         .signal-item.azul { border-color: var(--blue); }
 
-        .signal-item .time { font-weight: 900; font-size: 14px; display: block; }
+        .signal-item .time { font-weight: 900; font-size: 15px; display: block; letter-spacing: 1px; }
         .signal-item .type { font-size: 10px; text-transform: uppercase; font-weight: 700; }
         
         .type-rosa { color: var(--primary); }
@@ -314,15 +314,21 @@
             container.innerHTML = '';
             
             let currentTime = new Date();
-            // Começar 2 minutos à frente
-            currentTime.setMinutes(currentTime.getMinutes() + 2);
+            // Começar 1 minuto à frente do horário atual
+            currentTime.setMinutes(currentTime.getMinutes() + 1);
 
             for (let i = 0; i < count; i++) {
-                // Adicionar intervalo com pequena variação aleatória
-                const variation = Math.floor(Math.random() * 60); // variação de segundos
-                currentTime.setSeconds(currentTime.getSeconds() + (interval * 60) + variation);
+                // INCREMENTO PARA CIMA: Soma o intervalo ao horário anterior
+                // Adicionamos uma variação aleatória de 5 a 45 segundos para não ser exato
+                const randomSeconds = Math.floor(Math.random() * 40) + 5;
+                currentTime.setMinutes(currentTime.getMinutes() + interval);
+                currentTime.setSeconds(randomSeconds);
 
-                const timeStr = currentTime.toLocaleTimeString('pt-BR', { hour12: false });
+                // Formato HH:MM:SS
+                const hours = currentTime.getHours().toString().padStart(2, '0');
+                const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+                const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+                const timeStr = `${hours}:${minutes}:${seconds}`;
                 
                 // Definir Cor (Rosa, Roxo ou Azul)
                 const rand = Math.random();
@@ -371,17 +377,20 @@
             const alertSubtitle = document.getElementById('alert-subtitle');
 
             window.alertInterval = setInterval(() => {
-                const now = new Date().toLocaleTimeString('pt-BR', { hour12: false });
+                const nowTime = new Date();
+                const nowStr = `${nowTime.getHours().toString().padStart(2, '0')}:${nowTime.getMinutes().toString().padStart(2, '0')}:${nowTime.getSeconds().toString().padStart(2, '0')}`;
+                
                 const signals = document.querySelectorAll('.signal-item');
                 
                 signals.forEach(sig => {
                     const sigTime = sig.querySelector('.time').innerText;
-                    if (sigTime === now) {
+                    if (sigTime === nowStr) {
                         const type = sig.querySelector('.type').innerText;
                         alertTitle.innerText = "ENTRADA CONFIRMADA";
                         alertSubtitle.innerText = `POSSÍVEL ${type.toUpperCase()}`;
                         
                         overlay.classList.remove('hidden');
+                        // O alerta fica na tela por 15 segundos
                         setTimeout(() => overlay.classList.add('hidden'), 15000);
                     }
                 });
