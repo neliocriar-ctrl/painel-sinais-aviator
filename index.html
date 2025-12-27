@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Signal Bot - Aviator</title>
+    <title>Premium Predictor Pro - Aviator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff007a;
             --primary-glow: rgba(255, 0, 122, 0.5);
             --secondary: #00f2ff;
+            --purple: #a020f0;
+            --blue: #007bff;
             --bg-dark: #05070a;
             --glass: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
@@ -21,7 +23,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
@@ -33,155 +35,164 @@
                               radial-gradient(circle at bottom left, #0b1a2e, transparent);
         }
 
-        .container {
-            display: flex;
-            flex-direction: column;
+        .hidden { display: none !important; }
+
+        /* TELA HOME */
+        #home-screen {
             height: 100vh;
-        }
-
-        /* Painel de Sinais Premium */
-        .signal-panel {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 20px;
-            border-bottom: 1px solid var(--glass-border);
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 25px;
-            position: relative;
-            z-index: 10;
+            padding: 20px;
         }
 
-        .signal-panel::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
+        .config-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
             width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            background-size: 200% 100%;
-            animation: scan 3s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { background-position: 100% 0; }
-            100% { background-position: -100% 0; }
-        }
-
-        .logo-area {
-            position: relative;
-        }
-
-        .logo-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            padding: 3px;
-            background: #fff;
-            box-shadow: 0 0 15px var(--primary-glow);
-        }
-
-        .logo-circle img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .status-badge {
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary);
-            font-size: 9px;
-            font-weight: 900;
-            padding: 3px 10px;
-            border-radius: 20px;
-            white-space: nowrap;
-            box-shadow: 0 0 10px var(--primary);
-            transition: all 0.3s ease;
-        }
-
-        .main-signal {
-            flex-grow: 1;
-        }
-
-        .main-signal h1 {
-            font-size: 28px;
-            font-weight: 900;
-            text-transform: uppercase;
-            background: linear-gradient(to right, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-            letter-spacing: 3px;
+            max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             text-align: center;
         }
 
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
+        .config-card h1 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .stat-card {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 20px;
-            border-radius: 12px;
+        .config-card p {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
             border: 1px solid var(--glass-border);
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-generate {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px var(--primary-glow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        /* TELA DO PAINEL */
+        #panel-screen {
+            height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        .top-bar {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            padding: 15px 25px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
             align-items: center;
-            min-width: 100px;
+            justify-content: space-between;
+            z-index: 100;
         }
 
-        .stat-card .label {
-            font-size: 10px;
-            color: #888;
-            text-transform: uppercase;
-            margin-bottom: 4px;
+        .logo-small {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .stat-card .value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--secondary);
+        .logo-small img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
         }
 
-        .stat-card.highlight .value {
-            color: var(--primary);
+        .signals-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 5px;
+            flex-grow: 1;
+            margin: 0 20px;
+            scrollbar-width: none;
         }
 
-        /* Barra de Progresso */
-        .progress-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.1);
+        .signals-list::-webkit-scrollbar { display: none; }
+
+        .signal-item {
+            background: rgba(0,0,0,0.4);
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            min-width: 110px;
+            text-align: center;
         }
 
-        #progress-bar {
-            height: 100%;
-            width: 0%;
-            background: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-        }
+        .signal-item.rosa { border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+        .signal-item.roxo { border-color: var(--purple); }
+        .signal-item.azul { border-color: var(--blue); }
 
-        /* Área do Jogo */
-        .game-area {
+        .signal-item .time { font-weight: 900; font-size: 14px; display: block; }
+        .signal-item .type { font-size: 10px; text-transform: uppercase; font-weight: 700; }
+        
+        .type-rosa { color: var(--primary); }
+        .type-roxo { color: var(--purple); }
+        .type-azul { color: var(--blue); }
+
+        .game-container {
             flex-grow: 1;
             position: relative;
             background: #000;
-            margin: 10px;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
         }
 
         #game-iframe {
@@ -190,221 +201,192 @@
             border: none;
         }
 
-        /* Overlay de Alerta Premium */
-        #overlay-alert {
+        .btn-back {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: #888;
+            padding: 5px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* Overlay de Alerta */
+        #alert-overlay {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 100;
+            z-index: 1000;
             pointer-events: none;
-            transition: opacity 0.5s ease;
         }
 
         .alert-box {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 30px 60px;
+            background: rgba(0,0,0,0.9);
+            padding: 25px 50px;
             border-radius: 20px;
             border: 2px solid var(--primary);
-            box-shadow: 0 0 50px rgba(255, 0, 122, 0.4);
             text-align: center;
-            animation: pulse-alert 1.5s infinite;
+            animation: pulse 1.5s infinite;
         }
 
-        @keyframes pulse-alert {
-            0% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 0, 122, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(255, 0, 122, 0.7); }
-            100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 0, 122, 0.4); }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px var(--primary-glow); }
+            50% { transform: scale(1.05); box-shadow: 0 0 40px var(--primary); }
+            100% { transform: scale(1); box-shadow: 0 0 20px var(--primary-glow); }
         }
 
-        .alert-box h2 {
-            color: #fff;
-            font-size: 32px;
-            font-weight: 900;
-            margin-bottom: 5px;
-        }
-
-        .alert-box p {
-            color: var(--primary);
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* Responsividade */
         @media (max-width: 768px) {
-            .signal-panel {
-                flex-direction: column;
-                padding: 15px;
-                gap: 15px;
-            }
-            
-            .stats-row {
-                gap: 10px;
-                width: 100%;
-            }
-            
-            .stat-card {
-                flex: 1;
-                min-width: 0;
-                padding: 5px;
-            }
-            
-            .main-signal h1 {
-                font-size: 20px;
-            }
+            .top-bar { flex-direction: column; gap: 15px; }
+            .signals-list { width: 100%; margin: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="signal-panel">
-            <div class="logo-area">
-                <div class="logo-circle">
-                    <img src="https://via.placeholder.com/100/FFFFFF/FF007A?text=BOT" alt="Logo">
-                </div>
-                <div class="status-badge" id="status-text">INICIANDO...</div>
-            </div>
+
+    <!-- TELA HOME -->
+    <div id="home-screen">
+        <div class="config-card">
+            <h1>PREDICTOR PRO</h1>
+            <p>Configure sua estratégia de sinais</p>
             
-            <div class="main-signal">
-                <h1 id="signal-title">AGUARDE O SINAL</h1>
-                <div class="stats-row">
-                    <div class="stat-card">
-                        <span class="label">Próximo Rosa</span>
-                        <span class="value" id="pink-time">--:--</span>
-                    </div>
-                    <div class="stat-card highlight">
-                        <span class="label">Assertividade</span>
-                        <span class="value" id="graph-percent">0%</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="label">Saída Sugerida</span>
-                        <span class="value" id="exit-value">--X</span>
-                    </div>
-                </div>
+            <div class="input-group">
+                <label>Casa de Apostas (URL)</label>
+                <input type="text" id="input-url" value="https://www.txunabet.co.mz/pt">
             </div>
 
-            <div class="progress-container">
-                <div id="progress-bar"></div>
+            <div class="input-group">
+                <label>Número de Previsões</label>
+                <input type="number" id="input-count" value="10" min="1" max="50">
+            </div>
+
+            <div class="input-group">
+                <label>Intervalo de Tempo (Minutos)</label>
+                <input type="number" id="input-interval" value="5" min="1" max="60">
+            </div>
+
+            <button class="btn-generate" onclick="generateStrategy()">Gerar Estratégia</button>
+        </div>
+    </div>
+
+    <!-- TELA DO PAINEL -->
+    <div id="panel-screen" class="hidden">
+        <header class="top-bar">
+            <div class="logo-small">
+                <img src="https://via.placeholder.com/50/FFFFFF/FF007A?text=B" alt="Logo">
+                <button class="btn-back" onclick="goHome()">Voltar</button>
+            </div>
+
+            <div class="signals-list" id="signals-container">
+                <!-- Sinais gerados aparecerão aqui -->
+            </div>
+
+            <div id="current-status" style="font-size: 10px; color: var(--primary); font-weight: 900;">
+                SISTEMA ATIVO
             </div>
         </header>
 
-        <main class="game-area">
-            <iframe 
-                src="https://www.txunabet.co.mz/pt" 
-                id="game-iframe"
-                title="Plataforma de Jogo"
-                frameborder="0"
-                allowfullscreen>
-            </iframe>
+        <main class="game-container">
+            <iframe id="game-iframe" src="" frameborder="0"></iframe>
             
-            <div id="overlay-alert" class="hidden">
+            <div id="alert-overlay" class="hidden">
                 <div class="alert-box">
-                    <h2 id="overlay-text">ENTRADA CONFIRMADA</h2>
-                    <p>SAÍDA EM <span id="overlay-exit">2.00X</span></p>
+                    <h2 id="alert-title">ENTRADA CONFIRMADA</h2>
+                    <p id="alert-subtitle">POSSÍVEL ROSA</p>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        // CONFIGURAÇÕES DE TEMPO MAIS REALISTAS
-        const CONFIG = {
-            minWaitTime: 30000,    // Espera mínima entre sinais (30 segundos)
-            maxWaitTime: 90000,    // Espera máxima entre sinais (1.5 minutos)
-            analysisTime: 8000,    // Tempo de "análise" visual (8 segundos)
-            alertDuration: 15000   // Quanto tempo o sinal fica ativo (15 segundos)
-        };
+        function generateStrategy() {
+            const url = document.getElementById('input-url').value;
+            const count = parseInt(document.getElementById('input-count').value);
+            const interval = parseInt(document.getElementById('input-interval').value);
 
-        const elements = {
-            status: document.getElementById('status-text'),
-            title: document.getElementById('signal-title'),
-            pinkTime: document.getElementById('pink-time'),
-            graph: document.getElementById('graph-percent'),
-            exit: document.getElementById('exit-value'),
-            overlay: document.getElementById('overlay-alert'),
-            overlayText: document.getElementById('overlay-text'),
-            overlayExit: document.getElementById('overlay-exit'),
-            progressBar: document.getElementById('progress-bar')
-        };
+            if (!url) { alert("Insira a URL da casa!"); return; }
 
-        function updateProgressBar(duration, callback) {
-            let start = null;
-            function animate(timestamp) {
-                if (!start) start = timestamp;
-                let progress = timestamp - start;
-                let percentage = Math.min((progress / duration) * 100, 100);
-                elements.progressBar.style.width = percentage + '%';
+            // Configurar Iframe
+            document.getElementById('game-iframe').src = url;
+
+            // Gerar Horários
+            const container = document.getElementById('signals-container');
+            container.innerHTML = '';
+            
+            let currentTime = new Date();
+            // Começar 2 minutos à frente
+            currentTime.setMinutes(currentTime.getMinutes() + 2);
+
+            for (let i = 0; i < count; i++) {
+                // Adicionar intervalo com pequena variação aleatória
+                const variation = Math.floor(Math.random() * 60); // variação de segundos
+                currentTime.setSeconds(currentTime.getSeconds() + (interval * 60) + variation);
+
+                const timeStr = currentTime.toLocaleTimeString('pt-BR', { hour12: false });
                 
-                if (progress < duration) {
-                    requestAnimationFrame(animate);
-                } else if (callback) {
-                    callback();
+                // Definir Cor (Rosa, Roxo ou Azul)
+                const rand = Math.random();
+                let type, colorClass, typeText;
+
+                if (rand > 0.8) {
+                    type = 'rosa';
+                    colorClass = 'rosa';
+                    typeText = 'Rosa (10x+)';
+                } else if (rand > 0.4) {
+                    type = 'roxo';
+                    colorClass = 'roxo';
+                    typeText = 'Roxo (2x+)';
+                } else {
+                    type = 'azul';
+                    colorClass = 'azul';
+                    typeText = 'Azul (1.5x+)';
                 }
+
+                const item = document.createElement('div');
+                item.className = `signal-item ${colorClass}`;
+                item.innerHTML = `
+                    <span class="time">${timeStr}</span>
+                    <span class="type type-${type}">${typeText}</span>
+                `;
+                container.appendChild(item);
             }
-            requestAnimationFrame(animate);
+
+            // Trocar Telas
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('panel-screen').classList.remove('hidden');
+
+            // Iniciar Monitoramento de Alertas
+            startAlertMonitor();
         }
 
-        function generateData() {
-            const now = new Date();
-            // Rosa previsto para daqui a 5-12 minutos para parecer real
-            const pinkMinutes = now.getMinutes() + Math.floor(Math.random() * 7) + 5;
-            const time = `${now.getHours().toString().padStart(2, '0')}:${(pinkMinutes % 60).toString().padStart(2, '0')}`;
-            const accuracy = (Math.random() * 8 + 89).toFixed(1) + '%';
-            const exit = (Math.random() * 3 + 1.5).toFixed(2) + 'X';
-            
-            const messages = ["ENTRADA CONFIRMADA", "SINAL DETECTADO", "PADRÃO IDENTIFICADO", "PROTEÇÃO 4X"];
-            return { time, accuracy, exit, msg: messages[Math.floor(Math.random() * messages.length)] };
+        function goHome() {
+            document.getElementById('panel-screen').classList.add('hidden');
+            document.getElementById('home-screen').classList.remove('hidden');
+            clearInterval(window.alertInterval);
         }
 
-        function startSignalCycle() {
-            // FASE 1: AGUARDANDO PADRÃO (Tempo Longo)
-            elements.status.innerText = "AGUARDANDO...";
-            elements.status.style.background = "#555";
-            elements.title.innerText = "AGUARDANDO PADRÃO...";
-            elements.progressBar.style.width = '0%';
+        function startAlertMonitor() {
+            const overlay = document.getElementById('alert-overlay');
+            const alertTitle = document.getElementById('alert-title');
+            const alertSubtitle = document.getElementById('alert-subtitle');
 
-            const waitTime = Math.floor(Math.random() * (CONFIG.maxWaitTime - CONFIG.minWaitTime)) + CONFIG.minWaitTime;
-            
-            setTimeout(() => {
-                // FASE 2: ANALISANDO (Barra de progresso)
-                elements.status.innerText = "ANALISANDO...";
-                elements.status.style.background = "#ffae00";
-                elements.title.innerText = "ANALISANDO TENDÊNCIA...";
+            window.alertInterval = setInterval(() => {
+                const now = new Date().toLocaleTimeString('pt-BR', { hour12: false });
+                const signals = document.querySelectorAll('.signal-item');
                 
-                updateProgressBar(CONFIG.analysisTime, () => {
-                    // FASE 3: SINAL ATIVO
-                    const data = generateData();
-                    
-                    elements.status.innerText = "SINAL ATIVO";
-                    elements.status.style.background = "#00ff88";
-                    elements.title.innerText = data.msg;
-                    
-                    elements.pinkTime.innerText = data.time;
-                    elements.graph.innerText = data.accuracy;
-                    elements.exit.innerText = data.exit;
-                    
-                    elements.overlayText.innerText = data.msg;
-                    elements.overlayExit.innerText = data.exit;
-                    elements.overlay.classList.remove('hidden');
-                    
-                    // FASE 4: FINALIZAR SINAL E VOLTAR AO INÍCIO
-                    setTimeout(() => {
-                        elements.overlay.classList.add('hidden');
-                        startSignalCycle(); // Reinicia o ciclo
-                    }, CONFIG.alertDuration);
+                signals.forEach(sig => {
+                    const sigTime = sig.querySelector('.time').innerText;
+                    if (sigTime === now) {
+                        const type = sig.querySelector('.type').innerText;
+                        alertTitle.innerText = "ENTRADA CONFIRMADA";
+                        alertSubtitle.innerText = `POSSÍVEL ${type.toUpperCase()}`;
+                        
+                        overlay.classList.remove('hidden');
+                        setTimeout(() => overlay.classList.add('hidden'), 15000);
+                    }
                 });
-            }, waitTime);
+            }, 1000);
         }
-
-        window.onload = () => {
-            // Inicia o primeiro ciclo após 5 segundos de "análise inicial"
-            setTimeout(startSignalCycle, 5000);
-        };
     </script>
 </body>
 </html>
